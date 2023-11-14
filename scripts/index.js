@@ -6,7 +6,6 @@ const allcards = document.querySelector('.places__list');
 
 const createCard = (cards, deleteCallback) => {
     const cardN = cardtemplate.querySelector('.card').cloneNode(true);
-    
     const cardsImg = cardN.querySelector('.card__image');
     const cardsTtl = cardN.querySelector('.card__title');
     cardsImg.src = cards.link;
@@ -20,7 +19,6 @@ const deleteCallback = (event) => {
     event.target.closest('.card').remove();
 }
 // @todo: Вывести карточки на страницу
-
 initialCards.forEach((cardItm) => {
     allcards.append(createCard(cardItm, deleteCallback));
 });
