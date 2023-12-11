@@ -1,6 +1,7 @@
 import "./pages/index.css";
-import {openPopup, closePopup, closeEsc} from "./components/popups";
-import {initialCards, createCard, deleteCallback, likeCard} from "./components/cards";
+import {openPopup, closePopup, closeEsc, closePopupByClick} from "./components/modal";
+import {initialCards} from "./components/cards";
+import {createCard, deleteCallback, likeCard} from "./components/card";
 
 // @todo: Темплейт карточки
 
@@ -31,7 +32,7 @@ const popups = document.querySelectorAll(".popup"),
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((cardItm) => {
-    allcards.append(createCard(cardItm, openImageClick, deleteCallback));
+    allcards.append(createCard(cardItm, deleteCallback, likeCard, openImageClick));
 });
 
  //Данные профиля 
@@ -47,7 +48,7 @@ function handleFormSubmitProfile(evt){
 function handleFormSubmitNewCard(evt){
   evt.preventDefault();  
   const newCard = createCard(
-    {name:cardNameInput.value, link: cardLinkInput.value}, openImageClick, likeCard, deleteCallback);
+    {name:cardNameInput.value, link: cardLinkInput.value}, deleteCallback, likeCard, openImageClick);
     allcards.prepend(newCard);
   closePopup(popupNewCard);
   cardForm.reset();
@@ -60,11 +61,8 @@ function openImageClick(evt) {
   const card = evt.target.closest('.card'),
   cardImage = card.querySelector('.card__image'),
   cardTitle = card.querySelector('.card__title');
-
   popupImage.src = cardImage.src;
-  popupImage.alt = cardTitle.alt;
   popupCaption.textContent = cardTitle.textContent;
-
   openPopup(popupImageBox);
 }
 
@@ -77,14 +75,12 @@ profileEditButton.addEventListener('click',() => {
   jobInput.value = profileDescription.textContent;
 openPopup(popupEditProfile);
 });
+
 profileAddButton.addEventListener('click',() => openPopup(popupNewCard));
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.matches('.popup_is-opened, .popup__close'))
-      closePopup(popup);
-  });
+    closePopupByClick(evt, popup);      
+});
 });
 
-allcards.addEventListener('click', likeCard);
-
-export {allcards};
+// allcards.addEventListener('click', likeCard);
