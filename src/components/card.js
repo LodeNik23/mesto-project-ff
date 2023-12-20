@@ -1,5 +1,5 @@
 // @todo: Функция создания карточки
-/*корзина увеличивает изображение, лайк - удаляет карточку*/ 
+
 function createCard(cards, deleteCallback, likeCard, openImageClick) {
     const cardtemplate = document.querySelector("#card-template").content, 
     cardItem = cardtemplate.querySelector(".card").cloneNode(true), 

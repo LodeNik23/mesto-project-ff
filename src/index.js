@@ -62,6 +62,7 @@ function openImageClick(evt) {
   cardImage = card.querySelector('.card__image'),
   cardTitle = card.querySelector('.card__title');
   popupImage.src = cardImage.src;
+  popupImage.alt = cardImage.alt;
   popupCaption.textContent = cardTitle.textContent;
   openPopup(popupImageBox);
 }

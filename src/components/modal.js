@@ -1,13 +1,13 @@
 // Открыть попап
-function openPopup(querySelectorClassName){
-    querySelectorClassName.classList.add('popup_is-opened');
+function openPopup(popup){
+    popup.classList.add('popup');
     document.addEventListener('keydown', closeEsc);
-    querySelectorClassName.classList.add('popup_is-opened');
+    popup.classList.add('popup_is-opened');
   }
   
   // Закрыть попап
-  function closePopup(querySelectorClassName){
-    querySelectorClassName.classList.remove('popup_is-opened');
+  function closePopup(popup){
+    popup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closeEsc);
   }
 
@@ -18,10 +18,10 @@ function openPopup(querySelectorClassName){
     }
   }
 
-  function closePopupByClick(evt, popup){
+  function closePopupByClick(evt){
       if (evt.target.matches('.popup_is-opened, .popup__close')){
       closePopup(popup);
     }
   }
     
-  export {openPopup, closePopup, closeEsc, closePopupByClick};
+  export {openPopup, closePopup, closePopupByClick};
