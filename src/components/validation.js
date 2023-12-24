@@ -19,11 +19,11 @@
  
   const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(validationConfig.inputErrorClass);
-    errorElement.classList.remove(validationConfig.errorClass);
+    inputElement.classList.remove(validationConfig.inputErrorClass);('form__input_type_error')
+    errorElement.classList.remove(validationConfig.errorClass);('form__input-error_active')
     errorElement.textContent = '';
   };
-  
+    
   //проверка валидности инпута
   const isValid = (formElement, inputElement, validationConfig) => {
     if (inputElement.validity.patternMismatch) {     
@@ -45,22 +45,23 @@
     const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
     toggleButtonState(inputList, buttonElement, validationConfig);
-  
+    
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
         isValid(formElement, inputElement, validationConfig);
-        toggleButtonState(inputList, buttonElement, validationConfig);
-      });
+        toggleButtonState(inputList, buttonElement, validationConfig);      
+      });      
     });
   };
   
 
 // Привязка слушателя к формам
   const enableValidation = (validationConfig) => {
-    const formList = Array.from(document.querySelectorAll('.form'));
+    const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
+    
     formList.forEach((formElement) => {
       setEventListeners(formElement, validationConfig);
-      });
+    });    
   }; 
   
   
@@ -68,6 +69,7 @@
   const hasInvalidInput = (inputList) => {    
     return inputList.some((listItem) => {
       return !listItem.validity.valid;
+      
     })
   };
 //отключение кнопки
@@ -91,7 +93,4 @@
       toggleButtonState(inputList, buttonElement, validationConfig);
   }
 
-  export {enableValidation, validationConfig, clearValidation};
-
- 
-  
+  export {enableValidation, validationConfig, clearValidation};  
