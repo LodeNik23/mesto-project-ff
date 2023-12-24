@@ -38,7 +38,7 @@ const popups = document.querySelectorAll(".popup"),
 initialCards.forEach((cardItm) => { 
     allcards.append(createCard(cardItm, deleteCallback, likeCard, openImageClick)); 
 }); 
-
+// Включить валидацию
 enableValidation(validationConfig);
 
  //Данные профиля  
@@ -76,39 +76,19 @@ function openImageClick(evt) {
 
 profileForm.addEventListener('submit', handleFormSubmitProfile); 
 cardForm.addEventListener('submit', handleFormSubmitNewCard); 
+
 profileEditButton.addEventListener('click',() => { 
   nameInput.value = profileTitle.textContent; 
   jobInput.value = profileDescription.textContent; 
-//
-clearValidation(popupProfileForm, validationConfig); 
-//
+
+clearValidation(popupProfileForm, validationConfig);  
 openPopup(popupEditProfile); 
 }); 
 
 profileAddButton.addEventListener('click',() => openPopup(popupNewCard)); 
 popups.forEach((popup) => { 
   popup.addEventListener('mousedown', (evt) => { 
-    closePopupByClick(evt, popup);       
+    clearValidation(popupNewCard, validationConfig); 
+    closePopupByClick(evt, popup);     
 }); 
 }); 
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  renderSaving(true, popupProfileButton);
-
-  // POST запрос добавления имени и описания
-  changeProfileInfoRequest(
-    popupProfileNameInput.value,
-    popupProfileDescriptionInput.value
-  )
-    .then((res) => {
-      profileName.textContent = res.name;
-      profileDescription.textContent = res.about;
-
-      closePopup(popupProfile);
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      renderSaving(false, popupProfileButton);
-    });
-}

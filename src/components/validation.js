@@ -24,7 +24,6 @@
     errorElement.textContent = '';
   };
   
-
   //проверка валидности инпута
   const isValid = (formElement, inputElement, validationConfig) => {
     if (inputElement.validity.patternMismatch) {     
@@ -71,8 +70,6 @@
       return !listItem.validity.valid;
     })
   };
- 
-
 //отключение кнопки
   const toggleButtonState = (inputList, buttonElement, validationConfig) => {    
     if (hasInvalidInput(inputList)) {      
@@ -81,25 +78,18 @@
       
     } else {
           buttonElement.disabled = false;
-          buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-      
+          buttonElement.classList.remove(validationConfig.inactiveButtonClass);      
     }
   };   
 //очистка классов ошибок
   function clearValidation(profileForm, validationConfig) {
-    const buttonElement = profileForm.querySelector(
-      validationConfig.submitButtonSelector
+    const buttonElement = profileForm.querySelector(validationConfig.submitButtonSelector);
+    const inputList = Array.from(profileForm.querySelectorAll(validationConfig.inputSelector)
     );
-    const inputList = Array.from(
-      profileForm.querySelectorAll(validationConfig.inputSelector)
-    );
-      inputList.forEach((inputElement) => {
-      hideInputError(profileForm, inputElement, validationConfig);
+      inputList.forEach((inputElement) => {hideInputError(profileForm, inputElement, validationConfig);
     });
-  
-    toogleButtonState(inputList, buttonElement, validationConfig);
+      toggleButtonState(inputList, buttonElement, validationConfig);
   }
-
 
   export {enableValidation, validationConfig, clearValidation};
 
