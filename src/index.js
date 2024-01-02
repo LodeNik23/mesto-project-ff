@@ -1,8 +1,9 @@
 import "./pages/index.css"; 
 import {openPopup, closePopup, closeEsc, closePopupByClick} from "./components/modal"; 
 import {initialCards} from "./components/cards"; 
-import {createCard, deleteCallback, likeCard} from "./components/card";
+import {createCard, likeCard} from "./components/card";
 import {enableValidation, validationConfig, clearValidation} from "./components/validation";
+import {getUserData, getInitialCards, сhangeUserData, addCard, deleteCard, AvatarSnd} from "./components/api.js";
 
 // @todo: Темплейт карточки 
 
@@ -15,6 +16,7 @@ const profileEditButton = profile.querySelector('.profile__edit-button');
 const profileTitle = profile.querySelector('.profile__title'); 
 const profileDescription = profile.querySelector('.profile__description'); 
 const profileAddButton = profile.querySelector('.profile__add-button'); 
+const profileAvatar = profile.querySelector(".profile__image");
  
 const profileForm = document.querySelector('.popup__form[name="edit-profile"]'); 
 const nameInput = profileForm.querySelector('.popup__input_type_name'); 
@@ -34,10 +36,55 @@ const popups = document.querySelectorAll(".popup"),
   popupImage = popupImageBox.querySelector(".popup__image"), 
   popupCaption = popupImageBox.querySelector(".popup__caption"); 
 
+  export let profileId = "";
+
 // @todo: Вывести карточки на страницу 
-initialCards.forEach((cardItm) => { 
-    allcards.append(createCard(cardItm, deleteCallback, likeCard, openImageClick)); 
-}); 
+
+ 
+ /*Promise.all([getUserData(),getInitialCards()])
+  .then(([profileData, cards])=>{
+    profileTitle.textContent = profileData.name;
+    profileDescription.textContent = profileData.about;
+    profileAvatar.style.backgroundImage = `url(\\${profileData.avatar})`;
+    profileId = profileData._id;
+    cards.forEach((cards) => {
+      allcards.append(createCard(cards, profileId, removeMyCard, likeCard, openImageClick));
+      });
+  })
+  .catch((error)=>
+    console.log('данные не получены / promise:', error)
+  );
+
+*/
+
+   
+ Promise.all([getUserData(),getInitialCards()])
+ 
+ .then(([profileData, cardsData])=>{
+    profileId = profileData._id;
+    console.log([cardsData]);
+    
+    profileTitle.textContent = profileData.name;
+    profileDescription.textContent = profileData.about;
+    profileAvatar.style.backgroundImage = `url(\\${profileData.avatar})`;
+   
+    cardsData.forEach((cards) => {    
+      allcards.append(createCard(cards, profileId, likeCard, removeMyCard,  openImageClick));
+    });
+ })
+ .catch((error)=>
+   console.log('данные не обработаны / promise:', error)
+ );
+
+// удалить мою карточку 
+function removeMyCard(cardItem, cards) {
+  deleteCard(cards._id)
+    .then(() => 
+    deleteMyCard(cardItem))
+    .catch((error) => 
+    console.log('Что-то с карточкой / removeMyCard', error));
+}
+
 // Включить валидацию
 enableValidation(validationConfig);
 
@@ -59,6 +106,8 @@ function handleFormSubmitNewCard(evt){
   closePopup(popupNewCard); 
   cardForm.reset(); 
 }; 
+
+
 
 // cardImage.addEventListener('click', (evt) => openImageClick(evt.target.alt, evt.target.src)); 
 
@@ -92,3 +141,4 @@ popups.forEach((popup) => {
     closePopupByClick(evt, popup);     
 }); 
 }); 
+  

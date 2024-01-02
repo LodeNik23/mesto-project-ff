@@ -9,19 +9,24 @@
   };
 //передать enableValidation
 
+
+
 //создание и удаление классов и содержания ошибок
   const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(validationConfig.inputErrorClass);
+    
     errorElement.textContent = errorMessage;
     errorElement.classList.add(validationConfig.errorClass);
   };
  
   const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(validationConfig.inputErrorClass);('form__input_type_error')
-    errorElement.classList.remove(validationConfig.errorClass);('form__input-error_active')
-    errorElement.textContent = '';
+    inputElement.classList.remove(validationConfig.inputErrorClass);
+    if (errorElement) {
+      errorElement.classList.remove(validationConfig.errorClass);    
+      errorElement.textContent = '';
+    }
   };
     
   //проверка валидности инпута
