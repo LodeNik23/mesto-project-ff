@@ -5,25 +5,21 @@
       'Content-Type': 'application/json',
     }
   }
-//ok
 
   // Общая проверка
   function testData(res) {
-    if (res.ok) {
-        return res.json();        
-    }
+    if (res.ok) 
+    return res.json();  
     return Promise.reject(`Ошибка: ${res.status}`);
   };
-// ok
+
   
 //Загрузка информации о пользователе GET
   const getUserData = () => {    
     return fetch(`${config.baseUrl}/users/me`, {
       headers: config.headers,      
     })
-      .then((res)=>{
-        return testData(res);        
-      })        
+    .then((res) => testData(res));      
   };
   
  
@@ -32,9 +28,7 @@
     return fetch(`${config.baseUrl}/cards`, {
       headers: config.headers
     })
-      .then((res) => {
-        return testData(res);
-      });
+    .then((res) => testData(res));
   } 
 
   //Отредактировать профиль
@@ -48,9 +42,7 @@
           about: profileDescription,
       })
       })
-      .then((res) => {
-        return testData(res);
-      });
+      .then((res) => testData(res));
   }
 
 
@@ -63,56 +55,46 @@
         name: name,
         link: link,
       }),
-    }).then((res) => {
-      return testData(res);
-  });
+    })
+    .then((res) => testData(res));
 }
 
 //Удаление карточки
-  function deleteCard(cardId) {
+
+  function deleteMyCard(cardId) {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-        headers: config.headers,
+      headers: config.headers,
     })
-    .then((res) => {
-      return testData(res);
-    });   
+    .then((res) => testData(res));  
   }
   
+
   // Добавить лайк
   function addLikeCardSnd(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: config.headers,
     })
-    .then((res) => {
-      return testData(res);
-    });  
+    .then((res) => testData(res));
   }
 
   // Убрать лайк
   function deleteLikeCardSnd(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
+      method: 'DELETE',
       headers: config.headers,
     })
-    .then((res) => {
-      return testData(res);
-    });  
+    .then((res) => testData(res));
   }
 
   // Изменить аватар
-  function AvatarSnd(avatar) {
+  function avatarSnd(avatar) {
     return fetch(`${config.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: config.headers,
-      body: JSON.stringify({
-        avatar,
-      })
-      .then((res) => {
-        return testData(res);
-      })  
-    })
+      body: JSON.stringify({avatar}),})
+    .then((res) => testData(res));
   }
 
-  export { getUserData, getInitialCards, сhangeUserData, addCard, deleteCard, addLikeCardSnd, deleteLikeCardSnd, AvatarSnd};
+  export { getUserData, getInitialCards, сhangeUserData, addCard, deleteMyCard, addLikeCardSnd, deleteLikeCardSnd, avatarSnd};

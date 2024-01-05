@@ -3,7 +3,6 @@
 function openPopup(querySelectorClassName){ 
   querySelectorClassName.classList.add('popup_is-opened'); 
   document.addEventListener('keydown', closeEsc); 
-  querySelectorClassName.classList.add('popup_is-opened'); 
 } 
 
 // Закрыть попап 

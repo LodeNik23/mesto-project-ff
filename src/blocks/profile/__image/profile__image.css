@@ -21,3 +21,15 @@
     margin-right: 0;
   }
 }
+
+.profile__image:hover::after {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.80); 
+  background-image: url(../../../images/vector.svg);
+  content: '';
+  cursor: pointer;    
+  block-size: 120px;  
+  background-repeat: no-repeat;
+  background-position: center;  
+  inline-size: 120px; 
+}

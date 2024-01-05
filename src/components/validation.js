@@ -9,13 +9,10 @@
   };
 //передать enableValidation
 
-
-
 //создание и удаление классов и содержания ошибок
   const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add(validationConfig.inputErrorClass);
-    
+    inputElement.classList.add(validationConfig.inputErrorClass);    
     errorElement.textContent = errorMessage;
     errorElement.classList.add(validationConfig.errorClass);
   };
@@ -43,7 +40,6 @@
     hideInputError(formElement, inputElement, validationConfig);
   }
 }; 
-
   
 //Привязка слушателей на все инпуты
   const setEventListeners = (formElement, validationConfig) => {
@@ -59,7 +55,6 @@
     });
   };
   
-
 // Привязка слушателя к формам
   const enableValidation = (validationConfig) => {
     const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
@@ -68,21 +63,18 @@
       setEventListeners(formElement, validationConfig);
     });    
   }; 
-  
-  
+    
 // Есть невалидный инпут?
   const hasInvalidInput = (inputList) => {    
     return inputList.some((listItem) => {
       return !listItem.validity.valid;
-      
     })
   };
 //отключение кнопки
   const toggleButtonState = (inputList, buttonElement, validationConfig) => {    
     if (hasInvalidInput(inputList)) {      
           buttonElement.disabled = true;
-          buttonElement.classList.add(validationConfig.inactiveButtonClass); 
-      
+          buttonElement.classList.add(validationConfig.inactiveButtonClass);      
     } else {
           buttonElement.disabled = false;
           buttonElement.classList.remove(validationConfig.inactiveButtonClass);      

@@ -1,68 +1,65 @@
-import {addLikeCardSnd, deleteLikeCardSnd, deleteCard} from "./api";
-
-const cardTemplate = document.querySelector("#card-template").content;  
+import {addLikeCardSnd, deleteLikeCardSnd} from "./api";
 
 // @todo: Функция создания карточки
 
-    function createCard(cards, profileId, likeCardStand, deleteCallbackStand, openImageClickStand) {
-                  
+    function createCard(cards, profileId, likeCardStand, deleteCallbackStand, openImageClick) {
+      const cardTemplate = document.querySelector("#card-template").content;           
       const cardItem = cardTemplate.querySelector(".card").cloneNode(true);
-        console.log(cardItem.querySelector(".card__image"));
-
-      cardImg = cardItem.querySelector(".card__image");
-      cardTtl = cardItem.querySelector(".card__title");
-      likeBtn = cardItem.querySelector(".card__like-button");
-      deleteBtn = querySelector(".card__delete-button");
-      likeCounter = cardItem.querySelector(".card__like-counter");
-        
+      const cardImg = cardItem.querySelector(".card__image");      
+      const cardTtl = cardItem.querySelector(".card__title");      
+      const likeBtn = cardItem.querySelector(".card__like-button");      
+      const deleteBtn = cardItem.querySelector(".card__delete-button");
+      const likeCounter = cardItem.querySelector(".card__like-counter");
+            
       cardImg.src = cards.link; 
       cardImg.alt = cards.name; 
       cardTtl.textContent = cards.name;
-      likeCounter.textContent = cards.likes.length;
-
-      
+      likeCounter.textContent = cards.likes.length;     
     
     //блокировка кнопки удаления
-      if (profileId !==card.owner["_id"]) {
+      if (profileId !== cards.owner["_id"]) {
         deleteBtn.remove();
       } else {
         deleteBtn.addEventListener("click",() => {
           deleteCallbackStand(cardItem, cards);
         });
       }
+      
     //проверка лайков
-      if (checkMyLike(cards, profileId)) {
+      if (isLikeMine(cards, profileId)) {
         likeBtn.classList.add("card__like-button_is-active");
       } else {
         likeBtn.classList.remove("card__like-button_is-active");
       };
 
       
-      cardImg.addEventListener("click"(), openImageClickStand(cardItem)); 
-      //нужен openImageClick в index?
-      //deleteBtn.addEventListener("click", deleteCallback); 
+      cardImg.addEventListener("click", openImageClick); 
+      
       likeBtn.addEventListener("click", () => {
-        likeCardStand(cardItem, cards);
+        likeCardStand(cards, profileId, cardItem);
       });  
 
       cardItem.id = cards["_id"];
     return cardItem;
   }
 
+
   /* @todo: Функция лайка карточки
  const likeCard = (evt) => {
   evt.target.classList.toggle('card__like-button_is-active'); 
 }; 
 */
+
+
 function likeCard(cards, profileId, cardItem) {
   const likeBtn = cardItem.querySelector(".card__like-button");
-  const likeCounters = cardItem.querySelector(".card__like-counter");
+  const likeCounter = cardItem.querySelector(".card__like-counter");
     
   if (isLikeMine(cards, profileId)) {
-    
+    console.log('abrvalg');
     deleteLikeCardSnd(cards)
       .then((res) => {
-        likeCounters.textContent = res.likes.length;
+        likeCounter.textContent = res.likes.length;
         likeBtn.classList.remove('card__like-button_is-active');
         cards.likes = res.likes;
       })
@@ -74,8 +71,10 @@ function likeCard(cards, profileId, cardItem) {
     
     addLikeCardSnd(cards)
       .then((res) => {
-        likeCounters.textContent = res.likes.length;
+        likeCounter.textContent = res.likes.length;
+        
         likeBtn.classList.add("card__like-button_is-active");
+        
         cards.likes = res.likes;
       })
       .catch((error) => {
@@ -85,12 +84,10 @@ function likeCard(cards, profileId, cardItem) {
 }
 
 function isLikeMine(cards, profileId) {
-  return cards.likes.some((item) => item["_id"] === profileId);
-}
+  return cards.likes.some((itm) => itm._id === profileId);  
+} 
 
-  export {createCard, likeCard};
-
-
+export {createCard, likeCard};
 
   /*function createCard(cards, deleteCallback, likeCard, openImageClick) {
   const cardtemplate = document.querySelector("#card-template").content, 

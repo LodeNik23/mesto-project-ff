@@ -6,6 +6,7 @@
   position: absolute;
 }
 .popup__error_visible {
+  display: block;
   opacity: 1;
 }
 .popup__error:last-of-type {
