@@ -12,7 +12,6 @@
     return res.json();  
     return Promise.reject(`Ошибка: ${res.status}`);
   };
-
   
 //Загрузка информации о пользователе GET
   const getUserData = () => {    
@@ -20,8 +19,7 @@
       headers: config.headers,      
     })
     .then((res) => testData(res));      
-  };
-  
+  };  
  
   //Загрузить карточки
   const getInitialCards = () => {
@@ -45,7 +43,6 @@
       .then((res) => testData(res));
   }
 
-
 //Добавление карточки 
   function addCard(name, link) {
     return fetch(`${config.baseUrl}/cards`, {
@@ -60,7 +57,6 @@
 }
 
 //Удаление карточки
-
   function deleteMyCard(cardId) {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
@@ -69,7 +65,6 @@
     .then((res) => testData(res));  
   }
   
-
   // Добавить лайк
   function addLikeCardSnd(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {

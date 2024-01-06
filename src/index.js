@@ -2,10 +2,7 @@ import "./pages/index.css";
 import {
   openPopup, 
   closePopup, 
-  closeEsc, 
   closePopupByClick} from "./components/modal"; 
-import {
-  initialCards} from "./components/cards"; 
 import {
   createCard, 
   likeCard} from "./components/card";
@@ -71,9 +68,7 @@ export let profileId = "";
  Promise.all([getUserData(),getInitialCards()])
  
  .then(([profileData, cardsData])=>{
-    profileId = profileData._id;
-    console.log([cardsData]);
-    
+    profileId = profileData._id;    
     profileTitle.textContent = profileData.name;
     profileDescription.textContent = profileData.about;
     profileAvatar.style.backgroundImage = `url(\\${profileData.avatar})`;
